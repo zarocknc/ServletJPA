@@ -26,7 +26,7 @@ public class UsuarioRepository {
     private EntityManager em;
 
     public Usuario create(Usuario user) {
-        logger.info("Creando usuario" + user.getUsername());
+        logger.info("Creando usuario: " + user.getUsername());
         em.persist(user);
         return user;
     }
