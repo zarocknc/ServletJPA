@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <style>
+            .login-container {
+                width: 300px;
+                margin: 0 auto;
+                padding: 20px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                text-align: center;
+            }
+            .login-container h2 {
+                margin-bottom: 20px;
+            }
+            .login-container input[type="text"],
+            .login-container input[type="password"] {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+            }
+            .login-container input[type="submit"] {
+                width: 100%;
+                padding: 10px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 3px;
+                cursor: pointer;
+            }
+            .login-container input[type="submit"]:hover {
+                background-color: #45a049;
+            }
+            .register {
+                margin-top: 20px;
+                color: blue;
+                cursor: pointer;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <div class="login-container">
+            <h2>Login</h2>
+            <h:form>
+                <p:inputText value="#{loginBean.username}" placeholder="Username" required="true" />
+                <p:password value="#{loginBean.password}" placeholder="Password" required="true" />
+                <p:commandButton value="Login" action="#{loginBean.login}" update="messages" />
+            </h:form>
+            <br/>
+            <h:messages id="messages" />
+            <a class="link" href="register.html"><div class="register">Registrar </div></a>
+        </div>
+    </h:body>
+</html>
