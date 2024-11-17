@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Panel</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <h1 align="center">Bienvenido usuario</h1>
+        <h:form>
+            <p:dataTable value="#{loginBean.users}" var="user">
+                <p:column headerText="ID">
+                    <h:outputText value="#{user.id}" />
+                </p:column>
+                <p:column headerText="NAME">
+                    <h:outputText value="#{user.username}" />
+                </p:column>
+                <p:column headerText="Password">
+                    <h:outputText value="#{user.password}" />
+                </p:column>
+                <p:column headerText="Email">
+                    <h:outputText value="#{user.email}" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
