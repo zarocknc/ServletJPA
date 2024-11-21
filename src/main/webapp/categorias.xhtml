@@ -28,43 +28,41 @@
                     </p:toolbarGroup>
                 </p:toolbar>
 
-                <p:dataTable id="dt-categories" widgetVar="dtCategories" 
-                           value="#{categoriaBean.categorias}" var="categoria"
-                           reflow="true" styleClass="products-table"
-                           emptyMessage="No se encontraron categorías."
-                           paginator="true" rows="10" paginatorPosition="bottom">
-
-                    <p:column headerText="ID">
-                        <h:outputText value="#{categoria.id}" />
-                    </p:column>
-
-                    <p:column headerText="Nombre">
-                        <h:outputText value="#{categoria.nombre}" />
-                    </p:column>
-
-                    <p:column headerText="Descripción">
-                        <h:outputText value="#{categoria.descripcion}" />
-                    </p:column>
-
-                    <p:column exportable="false">
-                        <p:commandButton icon="pi pi-pencil" 
-                                       update=":dialogForm:manage-category-content"
-                                       oncomplete="PF('manageCategoryDialog').show()"
-                                       styleClass="edit-button rounded-button ui-button-success"
-                                       process="@this">
-                            <f:setPropertyActionListener value="#{categoria}" 
-                                                       target="#{categoriaBean.categoria}" />
-                        </p:commandButton>
-                        <p:commandButton class="ui-button-warning rounded-button" 
-                                       icon="pi pi-trash"
-                                       process="@this"
-                                       oncomplete="PF('deleteProductDialog').show()">
-                            <f:setPropertyActionListener value="#{categoria}" 
-                                                       target="#{categoriaBean.categoria}" />
-                        </p:commandButton>
-                    </p:column>
-
-                </p:dataTable>
+                <p:dataView id="dt-categories" var="categoria" value="#{categoriaBean.categorias}"
+                           gridIcon="pi pi-th-large" listIcon="pi pi-bars" layout="grid"
+                           rows="12" paginator="true" emptyMessage="No se encontraron categorías.">
+                    
+                    <p:dataViewGridItem>
+                        <p:card style="width: 300px; margin: 10px;">
+                            <f:facet name="title">
+                                #{categoria.nombre}
+                            </f:facet>
+                            <f:facet name="subtitle">
+                                ID: #{categoria.id}
+                            </f:facet>
+                            
+                            <p>#{categoria.descripcion}</p>
+                            
+                            <f:facet name="footer">
+                                <p:commandButton icon="pi pi-pencil" 
+                                               update=":dialogForm:manage-category-content"
+                                               oncomplete="PF('manageCategoryDialog').show()"
+                                               styleClass="edit-button rounded-button ui-button-success"
+                                               process="@this">
+                                    <f:setPropertyActionListener value="#{categoria}" 
+                                                               target="#{categoriaBean.categoria}" />
+                                </p:commandButton>
+                                <p:commandButton class="ui-button-warning rounded-button" 
+                                               icon="pi pi-trash"
+                                               process="@this"
+                                               oncomplete="PF('deleteProductDialog').show()">
+                                    <f:setPropertyActionListener value="#{categoria}" 
+                                                               target="#{categoriaBean.categoria}" />
+                                </p:commandButton>
+                            </f:facet>
+                        </p:card>
+                    </p:dataViewGridItem>
+                </p:dataView>
             </h:form>
 
             <h:form id="dialogForm">
