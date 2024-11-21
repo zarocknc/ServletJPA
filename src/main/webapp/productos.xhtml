@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Gestión de Productos</title>
+    </h:head>
+    <h:body>
+        <f:metadata>
+            <f:viewAction action="#{productoBean.cargarProductos()}" />
+        </f:metadata>
+        
+        <div class="card">
+            <h:form id="form">
+                <p:growl id="messages" showDetail="true" />
+                
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:commandButton value="Nuevo Producto" icon="pi pi-plus"
+                                       actionListener="#{productoBean.nuevo()}"
+                                       update=":dialogForm:manage-product-content"
+                                       oncomplete="PF('manageProductDialog').show()"
+                                       styleClass="ui-button-success" style="margin-right: .5rem">
+                            <p:resetInput target=":dialogForm:manage-product-content" />
+                        </p:commandButton>
+                    </p:toolbarGroup>
+                </p:toolbar>
+
+                <p:dataTable id="dt-products" widgetVar="dtProducts" 
+                           value="#{productoBean.productos}" var="producto"
+                           reflow="true" styleClass="products-table"
+                           emptyMessage="No se encontraron productos."
+                           paginator="true" rows="10" paginatorPosition="bottom">
+
+                    <p:column headerText="ID">
+                        <h:outputText value="#{producto.id}" />
+                    </p:column>
+
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{producto.nombre}" />
+                    </p:column>
+
+                    <p:column headerText="Descripción">
+                        <h:outputText value="#{producto.descripcion}" />
+                    </p:column>
+                    
+                    <p:column headerText="Precio">
+                        <h:outputText value="#{producto.precio}">
+                            <f:convertNumber type="currency" currencySymbol="S/." />
+                        </h:outputText>
+                    </p:column>
+                    
+                    <p:column headerText="Stock">
+                        <h:outputText value="#{producto.stock}" />
+                    </p:column>
+                    
+                    <p:column headerText="Categoría">
+                        <h:outputText value="#{producto.categoria.nombre}" />
+                    </p:column>
+
+                    <p:column exportable="false">
+                        <p:commandButton icon="pi pi-pencil" 
+                                       update=":dialogForm:manage-product-content"
+                                       oncomplete="PF('manageProductDialog').show()"
+                                       styleClass="edit-button rounded-button ui-button-success"
+                                       process="@this">
+                            <f:setPropertyActionListener value="#{producto}" 
+                                                       target="#{productoBean.producto}" />
+                        </p:commandButton>
+                        <p:commandButton class="ui-button-warning rounded-button" 
+                                       icon="pi pi-trash"
+                                       process="@this"
+                                       oncomplete="PF('deleteProductDialog').show()">
+                            <f:setPropertyActionListener value="#{producto}" 
+                                                       target="#{productoBean.producto}" />
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+            </h:form>
+
+            <h:form id="dialogForm">
+                <p:dialog header="Detalles de Producto" showEffect="fade" modal="true"
+                          widgetVar="manageProductDialog" responsive="true">
+                    <p:outputPanel id="manage-product-content" class="ui-fluid">
+                        <div class="field">
+                            <p:outputLabel for="name">Nombre</p:outputLabel>
+                            <p:inputText id="name" value="#{productoBean.producto.nombre}" required="true" />
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="description">Descripción</p:outputLabel>
+                            <p:inputTextarea id="description" value="#{productoBean.producto.descripcion}" />
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="price">Precio</p:outputLabel>
+                            <p:inputNumber id="price" value="#{productoBean.producto.precio}" 
+                                         symbol="S/." symbolPosition="p" decimalSeparator="." 
+                                         thousandSeparator="," required="true"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="stock">Stock</p:outputLabel>
+                            <p:inputNumber id="stock" value="#{productoBean.producto.stock}" 
+                                         decimalPlaces="0" required="true"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="categoria">Categoría</p:outputLabel>
+                            <p:selectOneMenu id="categoria" value="#{productoBean.producto.categoria}" 
+                                           converter="#{categoriaConverter}" required="true">
+                                <f:selectItem itemLabel="Seleccione una categoría" itemValue="#{null}" />
+                                <f:selectItems value="#{productoBean.categorias}" var="cat"
+                                             itemLabel="#{cat.nombre}" itemValue="#{cat}" />
+                            </p:selectOneMenu>
+                        </div>
+                    </p:outputPanel>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Guardar" icon="pi pi-check"
+                                       actionListener="#{productoBean.guardar}"
+                                       update="manage-product-content,:form:dt-products,:form:messages"
+                                       process="manage-product-content @this" />
+                        <p:commandButton value="Cancelar" icon="pi pi-times"
+                                       onclick="PF('manageProductDialog').hide()"
+                                       class="ui-button-secondary" type="button" />
+                    </f:facet>
+                </p:dialog>
+            </h:form>
+        </div>
+    </h:body>
+</html>

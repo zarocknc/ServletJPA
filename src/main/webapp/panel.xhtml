@@ -16,6 +16,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
         <h:form>
             <p:commandButton value="Gestionar Categorías" action="categorias?faces-redirect=true" 
                            icon="pi pi-list" style="margin: 10px;"/>
+            <p:commandButton value="Gestionar Productos" action="productos?faces-redirect=true"
+                           icon="pi pi-shopping-cart" style="margin: 10px;"/>
             <p:dataTable value="#{loginBean.users}" var="user">
                 <p:column headerText="ID">
                     <h:outputText value="#{user.id}" />
