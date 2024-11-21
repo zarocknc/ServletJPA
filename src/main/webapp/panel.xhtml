@@ -14,6 +14,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
     <h:body>
         <h1 align="center">Bienvenido usuario</h1>
         <h:form>
+            <p:commandButton value="Gestionar Categorías" action="categorias?faces-redirect=true" 
+                           icon="pi pi-list" style="margin: 10px;"/>
             <p:dataTable value="#{loginBean.users}" var="user">
                 <p:column headerText="ID">
                     <h:outputText value="#{user.id}" />
